@@ -1,0 +1,115 @@
+import mysql.connector
+con = mysql.connector.connect(host="localhost", user="root", password="123456789", database="task")
+
+
+def AddStudent(name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade):
+    res = con.cursor()
+    sql = "insert into school (name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    user = (name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade)
+    res.execute(sql, user)
+    con.commit()
+    print("add student")
+
+def GetStudent(id):
+    res = con.cursor()
+    sql = "select ID,name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade from where id = %s"
+    user = (id)
+    res.execute(sql, user)
+    result = res.fetchall()
+    print(result)
+
+def GetAllStudent():
+    res = con.cursor()
+    sql = "select ID,name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade from school"
+    res.exwcute(sql)
+    result = res.fetchall()
+    print(result)
+
+def UpdateStudent(name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade):
+    res = con.cursor()
+    sql = "update student set name = %S, dept = %S, college = %S, Mark1 = %S, Mark2 = %S, Mark3 = %S, Mark4 = %S, Mark5 = %S where id = %s"
+    user = (name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5)
+    res.execute(sql,user)
+    con.commit()
+    print("Update Successfull")
+
+def DeleteStudent(id):
+    res = con.cursor()
+    sql = "delete from student where id = %s"
+    user = (id)
+    res.execute(sql,user)
+    con.commit()
+    print("Deleted Data Successfully")
+
+def Exit():
+    pass
+
+while (True):
+    print("1. AddStudent")
+    print("2. get student")
+    print("3. get all student")
+    print("4. update all student")
+    print("5. delete a student")
+    print("6. exit")
+    a = int(input("Enter your choice: "))
+
+    if a == 1:
+        name = input("Enter Name: ")
+        dept = input("Enter Dept: ")
+        college = input("Enter Name of College: ")
+        Mark1 = int(input("Mark1: "))
+        Mark2 = int(input("Mark2: "))
+        Mark3 = int(input("Mark3: "))
+        Mark4 = int(input("Mark4: "))
+        Mark5 = int(input("Mark5: "))
+        total_mark = Mark1+Mark2+Mark3+Mark4+Mark5
+        print(total_mark)
+        average = total_mark/5
+        print(average)
+
+        grade = ''
+
+        if (average>80):
+            grade = 'A'
+            print("Grade A")
+
+        elif (average<80) or (average>70):
+            grade = 'B'
+            print("Grade B")
+
+        else:
+            grade = 'C'
+            print("Grade C")
+
+        AddStudent(name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade)
+
+    elif a == 2:
+        id = input("Enter the ID: ")
+        print(id)
+
+    elif a == 3:
+        GetAllStudent()
+
+    elif a == 4:
+        id = input("Enter the ID: ")
+        name = input("Enter Name: ")
+        dept = input("Enter Dept: ")
+        college = input("Enter Name of College: ")
+        Mark1 = int(input("Mark1: "))
+        Mark2 = int(input("Mark2: "))
+        Mark3 = int(input("Mark3: "))
+        Mark4 = int(input("Mark4: "))
+        Mark5 = int(input("Mark5: "))
+        UpdateStudent(name, dept, college, Mark1, Mark2, Mark3, Mark4, Mark5, total_mark, average, grade)
+
+    elif a == 5:
+         id = input("Enter the ID to delete: ")
+         DeleteStudent(id)
+
+    elif a == 6:
+         quit()
+
+    else:
+         Print("select correct menu !")
+
+
